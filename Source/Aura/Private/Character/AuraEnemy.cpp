@@ -28,8 +28,16 @@ AAuraEnemy::AAuraEnemy()
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	
+}
+
+void AAuraEnemy::InitAbilityActorInfo()
+{
 	//设置拥有者（敌人）和化身（敌人）
 	AbilitySystemComponent->InitAbilityActorInfo(this,this);
+	//绑定委托函数调用
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
 
 

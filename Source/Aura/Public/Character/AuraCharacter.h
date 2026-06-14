@@ -27,7 +27,7 @@ protected:
 
 		
 private:
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 public:
 
 	virtual void Tick(float DeltaTime) override;
