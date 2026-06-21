@@ -26,9 +26,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	AAuraEnemy();
 	
-	//敌人接口函数
+	/* 敌人敌人接口函数  begin */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
+	/* 敌人敌人接口函数  end */
+	
+	/* CombatInterface函数  begin */
+	virtual int32 GetPlayerLevel() override;
+	/* CombatInterface函数  end */
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;

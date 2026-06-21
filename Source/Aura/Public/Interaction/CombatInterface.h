@@ -22,5 +22,5 @@ class AURA_API ICombatInterface
 
 	
 public:
-	virtual int32 GetLevel();
+	virtual int32 GetPlayerLevel();
 };

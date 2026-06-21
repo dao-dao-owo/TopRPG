@@ -20,6 +20,11 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 	//客户端设置
 	virtual void OnRep_PlayerState() override;
+	
+	/* CombatInterface函数  begin */
+	virtual int32 GetPlayerLevel() override;
+	/* CombatInterface函数  end */
+	
 protected:
 
 	virtual void BeginPlay() override;
