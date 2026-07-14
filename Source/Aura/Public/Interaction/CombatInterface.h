@@ -7,6 +7,8 @@
 #include "CombatInterface.generated.h"
 
 
+class UAnimMontage;
+
 UINTERFACE(BlueprintType)
 class UCombatInterface : public UInterface
 {
@@ -27,4 +29,7 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdataFacingTarget(const FVector& Target);
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UAnimMontage* GetHitReactMontage();
 };
