@@ -9,6 +9,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
+class UMaterialInstance;
 class UGameplayAbility;
 class UAbilitySystemComponent;
 class UAttributeSet;
@@ -27,6 +28,10 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 	
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual void Die() override;
+	
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 
 protected:
 
@@ -62,6 +67,22 @@ protected:
 	
 	void AddCharacterAbilities();
 	
+	/* Dissolve Effects */
+	
+	void Dissolve();
+	
+	//时间轴
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartWeaponDissolveTimeline(UMaterialInstanceDynamic* DynamicMaterialInstance);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> DissolveMaterialInstance;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> WeaponDissolveMaterialInstance;
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Abilites")

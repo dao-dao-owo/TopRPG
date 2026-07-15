@@ -6,6 +6,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "Aura/Aura.h"
 #include "Components/CapsuleComponent.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 
 AAuraCharacterBase::AAuraCharacterBase()
@@ -33,6 +34,31 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 {
 	return HitReactMontage;
+}
+
+void AAuraCharacterBase::Die()
+{
+	//武器分离
+	Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
+	MulticastHandleDeath();
+}
+
+void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+{
+	//开启物理
+	Weapon->SetSimulatePhysics(true);
+	//开启重力
+	Weapon->SetEnableGravity(true);
+	//碰撞模式
+	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetEnableGravity(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Dissolve();
 }
 
 void AAuraCharacterBase::BeginPlay()
@@ -77,6 +103,24 @@ void AAuraCharacterBase::AddCharacterAbilities()
 	if (!HasAuthority()) return;
 
 	AuraASC->AddCharacterAbilities(StartupAbilities);
+}
+
+void AAuraCharacterBase::Dissolve()
+{
+	if (IsValid(DissolveMaterialInstance))
+	{
+		//创建动态材质
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(DissolveMaterialInstance, this);
+		GetMesh()->SetMaterial(0, DynamicMatInst);
+		StartDissolveTimeline(DynamicMatInst);
+	}
+	if (IsValid(WeaponDissolveMaterialInstance))
+	{
+		//创建动态材质
+		UMaterialInstanceDynamic* DynamicMatInst = UMaterialInstanceDynamic::Create(WeaponDissolveMaterialInstance, this);
+		Weapon->SetMaterial(0, DynamicMatInst);
+		StartWeaponDissolveTimeline(DynamicMatInst);
+	}
 }
 
 

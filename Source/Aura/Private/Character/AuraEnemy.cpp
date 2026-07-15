@@ -88,7 +88,7 @@ void AAuraEnemy::InitAbilityActorInfo()
 void AAuraEnemy::InitializeDefaultAttribute() const
 {
 	UAuraAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
-	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+
 }
 
 
@@ -117,5 +117,11 @@ void AAuraEnemy::UnHighlightActor()
 int32 AAuraEnemy::GetPlayerLevel()
 {
 	return Level;
+}
+
+void AAuraEnemy::Die()
+{
+	SetLifeSpan(LifeSpan);
+	Super::Die();
 }
 
