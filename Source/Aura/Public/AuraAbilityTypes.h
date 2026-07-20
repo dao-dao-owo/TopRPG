@@ -18,8 +18,20 @@ public:
 	//支持UE反射
 	virtual  UScriptStruct* GetScriptStruct() const
 	{
-		return FGameplayEffectContext::StaticStruct();
+		return StaticStruct();
 	}
+	
+	virtual FAuraGameplayEffectContext* Duplicate() const
+	{
+		FAuraGameplayEffectContext* NewContext = new FAuraGameplayEffectContext();
+		*NewContext = *this;
+		if (GetHitResult())
+		{
+			NewContext->AddHitResult(*GetHitResult(), true);
+		}
+		return NewContext;
+	}
+	
 	//支持网络序列化
 	virtual  bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess);
 protected:
@@ -29,4 +41,14 @@ protected:
 	
 	UPROPERTY()
 	bool bIsCriticalHit = false;
+};
+
+template<>
+struct TStructOpsTypeTraits<FAuraGameplayEffectContext> : public TStructOpsTypeTraitsBase2<FAuraGameplayEffectContext>
+{
+	enum
+	{
+		WithNetSerializer = true,
+		WithCopy = true
+	};
 };
