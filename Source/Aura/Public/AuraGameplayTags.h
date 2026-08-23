@@ -58,6 +58,8 @@ public:
 	
 	FGameplayTag Abilities_Fire_FireBolt;
 	
+	FGameplayTag Cooldown_Fire_FireBolt;
+	
 	FGameplayTag Montage_Attack_Weapon;
 	FGameplayTag Montage_Attack_RightHand;
 	FGameplayTag Montage_Attack_LeftHand;
