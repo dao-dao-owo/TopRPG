@@ -74,6 +74,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category = "GAS|Message")
 	FAbilityInfoSignature AbilityInfoDelegate;
+	
+	UPROPERTY(BlueprintAssignable, Category = "GAS|XP")
+	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
 	//委托实例 end
 	
 protected:
@@ -86,6 +89,7 @@ protected:
 	
 	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraAbilitySystemComponent);
 	
+	void OnXPChanged(int32 NewXP) const;
 	
 	//从数据表中获取行数据（通用）
 	template<typename T>
