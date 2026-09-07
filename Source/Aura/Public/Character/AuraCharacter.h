@@ -21,6 +21,10 @@ public:
 	//客户端设置
 	virtual void OnRep_PlayerState() override;
 	
+	/* Players Interface函数 begin */
+	virtual void AddToXP_Implementation(int32 InXP) override;
+	/* Players Interface函数 end */
+	
 	/* CombatInterface函数  begin */
 	virtual int32 GetPlayerLevel() override;
 	/* CombatInterface函数  end */

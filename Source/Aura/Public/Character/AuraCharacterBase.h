@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Interaction/CombatInterface.h"
+#include "Interaction/PlayerInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 class UNiagaraSystem;
@@ -18,7 +19,7 @@ class UGameplayEffect;
 class UAnimMontage;
 
 UCLASS(Abstract)
-class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface, public IPlayerInterface
 {
 	GENERATED_BODY()
 
@@ -111,6 +112,9 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "Abilites")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
+	
+	UPROPERTY(EditAnywhere, Category = "Abilites")
+	TArray<TSubclassOf<UGameplayAbility>> StartupPassiveAbilities;
 	
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
