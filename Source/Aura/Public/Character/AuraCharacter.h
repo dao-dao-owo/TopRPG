@@ -23,10 +23,11 @@ public:
 	
 	/* Players Interface函数 begin */
 	virtual void AddToXP_Implementation(int32 InXP) override;
+	virtual void LevelUp_Implementation() override;
 	/* Players Interface函数 end */
 	
 	/* CombatInterface函数  begin */
-	virtual int32 GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 	/* CombatInterface函数  end */
 	
 protected:

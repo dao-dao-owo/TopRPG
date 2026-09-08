@@ -35,7 +35,7 @@ public:
 	/* 敌人敌人接口函数  end */
 	
 	/* CombatInterface函数  begin */
-	virtual int32 GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 	virtual void Die() override;
 	/* CombatInterface函数  end */
 	
