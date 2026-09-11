@@ -6,7 +6,10 @@
 #include "AuraCharacterBase.h"
 #include "AuraCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
 class AAuraHUD;
+class UNiagaraComponent;
 
 
 UCLASS()
@@ -37,6 +40,9 @@ public:
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/* CombatInterface函数  end */
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+	
 protected:
 
 	virtual void BeginPlay() override;
@@ -44,7 +50,17 @@ protected:
 
 		
 private:
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCameraComponent> TopDownCameraComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USpringArmComponent> CameraBoom;
+	
 	virtual void InitAbilityActorInfo() override;
+	
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastLevelUpParticles() const;
 public:
 
 	virtual void Tick(float DeltaTime) override;
